@@ -14,4 +14,19 @@ class Command(BaseCommand):
 
         for phone in phones:
             # TODO: Добавьте сохранение модели
-            pass
+            # phone = Phone(name=phone['name'], image=phone['image'], price=phone['price'], release_date=phone['release_date'], lte_exists=phone['lte_exists'])
+            # phone.save()
+            Phone.objects.create(
+                name=phone['name'],
+                price=phone['price'],
+                image=phone['image'],
+                release_date=phone['release_date'],
+                lte_exists=phone['lte_exists'],
+                slug=create_slug(phone['name']),
+            )
+
+        print(f'данные успешно загружены в базу данных')
+
+def create_slug(text: str) -> str:
+    text = text.lower().replace(' ', '_').replace('&', '_and_')
+    return text
